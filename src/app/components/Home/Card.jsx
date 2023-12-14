@@ -1,12 +1,18 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import Image from 'next/image';
+import Link from 'next/link';
 import Divider from '../utils/Divider';
+import formatDate from '@/utils/formatDate';
 
-export default function Card() {
+export default function Card({
+  title, author, description, type, image, pdf, path, content, date,
+}) {
   return (
     <>
       <article className="flex flex-col py-8">
-        <div className="grid grid-cols-8 gap-x-2">
-          <div className="flex flex-col gap-4 col-span-6">
+        <div className="flex flex-col sm:flex-row gap-x-4 gap-y-3 justify-between items-center">
+          <div className="flex flex-col gap-4 w-full max-w-4xl">
             <header className="flex gap-2 text-sm flex-wrap">
               <Image
                 width={20}
@@ -16,86 +22,87 @@ export default function Card() {
                 className="rounded-full"
               />
               <span>
-                Harendra Kumar
+                {author}
               </span>
               <span className="">·</span>
               <span>
-                Agosto 3
+                {formatDate(date)}
               </span>
             </header>
-            <a href="/">
-              <h1 className="font-black text-xl">
-                Interview: Can You Stop “forEach” in JavaScript?
+            <Link href={`/publicaciones/${type}/${path}`}>
+              <h1 className="font-black text-2xl">
+                {title}
               </h1>
-              <div>
-                There are 3 ways to stop forEach in JavaScript — Interviewer:
-                Can you stop a forEach loop in JavaScript? This is a question I
-                was once asked during an interview, and my initial response was,
-                “No, I cant do that.”
-              </div>
-            </a>
+              <p>
+                {`${description.substring(0, 300)} ...`}
+              </p>
+            </Link>
             <footer className="hidden md:flex justify-between items-center mt-5 text-sm">
               <div className="flex gap-4 justify-center items-center">
-                <a href="/" className="px-2 py-1 bg-gray-200 rounded-full">
-                  Front End Development
-                </a>
-                <a href="/">
-                  5 min read
-                </a>
+                <Link href={`/publicaciones/${type}`} className="px-2 py-1 bg-gray-200 rounded-full">
+                  {type}
+                </Link>
+                <Link href={`/publicaciones/${type}/${path}`}>
+                  {Math.ceil(content.length / 550)}
+                  {' '}
+                  min
+                </Link>
               </div>
               <div className="flex justify-center items-center gap-2">
-                <a href="/" aria-label="compartir" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
+                <Link target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=https://blog-page-rust.vercel.app/publicaciones/${type}/${path}/&src=sdkpreparse`} aria-label="compartir" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
                   <svg className="icon icon-tabler icon-tabler-share-3" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M13 4v4c-6.575 1.028 -9.02 6.788 -10 12c-.037 .206 5.384 -5.962 10 -6v4l8 -7l-8 -7z" />
                   </svg>
-                </a>
-                <a href="/" aria-label="guardar" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
+                </Link>
+                <Link href={pdf} aria-label="guardar" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
                   <svg className="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
                     <path d="M7 11l5 5l5 -5" />
                     <path d="M12 4l0 12" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </footer>
           </div>
-          <div className="flex justify-center items-center col-span-2">
-            <a href="/">
+          <div className="flex justify-center items-center">
+            <Link href={`/publicaciones/${type}/${path}`}>
               <Image
-                width={120}
-                height={120}
-                src="/images/cardExample.jpg"
-                alt="Card Example"
+                width={250}
+                height={250}
+                src={image}
+                alt={title}
               />
-            </a>
+            </Link>
           </div>
         </div>
         <footer className="flex md:hidden justify-between items-center mt-5 text-sm flex-wrap gap-x-2 gap-y-2">
           <div className="flex gap-4 justify-start items-center flex-wrap">
-            <a href="/" className="px-2 py-1 bg-gray-200 rounded-full">
-              Front End Development
-            </a>
-            <a href="/" className="ml-2">
-              5 min read
-            </a>
+            <Link href={`/${type}`} className="px-2 py-1 bg-gray-200 rounded-full">
+              {type}
+            </Link>
+            <Link href={`/publicaciones/${type}/${path}`} className="ml-2">
+              {Math.ceil(content.length / 550)}
+              {' '}
+              min
+            </Link>
           </div>
           <div className="flex justify-center items-center gap-2">
-            <a href="/" aria-label="compartir" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
+            <Link href={`/publicaciones/${type}/${path}`} aria-label="compartir" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
               <svg className="icon icon-tabler icon-tabler-share-3" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M13 4v4c-6.575 1.028 -9.02 6.788 -10 12c-.037 .206 5.384 -5.962 10 -6v4l8 -7l-8 -7z" />
               </svg>
-            </a>
-            <a href="/" aria-label="guardar" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
+            </Link>
+            <Link href={pdf} aria-label="guardar" className="p-1 text-[#94979b] hover:text-[#4e4f52]">
               <svg className="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
                 <path d="M7 11l5 5l5 -5" />
                 <path d="M12 4l0 12" />
               </svg>
-            </a>
+            </Link>
           </div>
         </footer>
       </article>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import MoreOptionsIcon from './MoreOptionsIcon';
 import ExitButton from './ExitButton';
 
@@ -19,8 +20,8 @@ export default function NavBarMobile() {
         w-screen max-w-md bg-one dark:bg-one-dark top-0 left-0 ${isOpen || 'left-[-100vh] opacity-0'} md:hidden
          transition-all shadow-2xl`}
       >
-        <a href="/" className="text-gray-500 hover:text-gray-900">Login</a>
-        <a href="/" className="text-gray-500 hover:text-gray-900">Signup</a>
+        <Link href="/" className="text-gray-500 hover:text-gray-900">Inicio</Link>
+        <Link href="/" className="text-gray-500 hover:text-gray-900">Categorias</Link>
         <button type="button" aria-label="salir" className="w-7 mt-20" onClick={handleClick}>
           <ExitButton />
         </button>
